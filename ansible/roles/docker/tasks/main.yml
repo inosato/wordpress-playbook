@@ -39,7 +39,7 @@
   systemd:
     name: docker.service
     enabled: True
-    daemon_reload: True
+    # daemon_reload: True
     state: started
 
 - name: Check Docker Compose exists
