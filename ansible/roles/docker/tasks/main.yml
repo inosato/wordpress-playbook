@@ -1,0 +1,56 @@
+- name: Check Docker exists
+  shell: "docker -v"
+  ignore_errors: True
+  register: docker_version
+  changed_when: False
+
+# - name: debug docker_version
+#   debug:
+#     msg: "{{ docker_version }}"
+
+- name: Get Docker start shell file
+  get_url:
+    url: "https://get.docker.com/"
+    dest: /tmp/start.sh
+  register: start_shell
+  when: docker_version.rc != 0
+
+# - name: debug start_shell
+#  debug:
+#    msg: "{{ start_shell }}"
+
+- name: Add Execution authority
+  file:
+    path: "{{ start_shell.dest }}"
+    mode: "0700"
+  when: docker_version.rc != 0
+
+- name: Install Docker
+  shell: "{{ start_shell.dest }}"
+  when: docker_version.rc != 0
+
+- name: Remove start shell file
+  file:
+    path: "{{ start_shell.dest }}"
+    state: absent
+  when: docker_version.rc != 0
+
+- name: Start Docker service
+  systemd:
+    name: docker.service
+    enabled: True
+    daemon_reload: True
+    state: started
+
+- name: Check Docker Compose exists
+  shell: "{{ docker_compose_dest }} -v"
+  ignore_errors: True
+  register: docker_compose_version
+  changed_when: False
+
+- name: Install docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_ver }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: "{{ docker_compose_dest }}"
+    mode: +x
+  when: docker_compose_version.rc != 0
