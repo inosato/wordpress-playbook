@@ -1,8 +1,8 @@
 - hosts: server
   become: True
-  become_user: root
   roles:
-    - yum/update-all
-    - docker
+    - { role: yum/update-all, vars: [{ ansible_become_user: root }] }
+    - { role: user, vars: [{ ansible_become_user: root }] }
+    - { role: docker, vars: [{ ansible_become_user: admin }] }
     - { role: wordpress, vars: [{ ansible_become_user: admin }] }
-    - nginx
+    - { role: nginx, vars: [{ ansible_become_user: root }] }

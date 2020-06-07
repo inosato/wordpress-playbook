@@ -2,7 +2,7 @@
 #   * Official English Documentation: http://nginx.org/en/docs/
 #   * Official Russian Documentation: http://nginx.org/ru/docs/
 
-user {{ nginx.user }} {{ nginx.group }};
+user {{ user }} {{ group }};
 worker_processes auto;
 error_log {{ nginx.logdir }}/error.log error;
 pid {{ nginx.pidfile }};

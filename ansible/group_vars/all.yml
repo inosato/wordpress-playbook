@@ -1,2 +1,3 @@
-docker:
-  group: docker
+user: admin
+group: admin
+docker_group: docker

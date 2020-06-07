@@ -1,0 +1,6 @@
+- name: user mod
+  user:
+    name: "{{ user }}"
+    groups:
+      - "{{ group }}" # for nginx
+      - "{{ docker_group }}" # for docker

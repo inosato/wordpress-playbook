@@ -1,14 +1,9 @@
-- name: user mod
-  user:
-    name: "{{ ansible_env.USER }}"
-    group: "{{ docker.group }}"
-
 - name: Put docker-compose.yml
   template:
     src: docker-compose.yml.j2
     dest: "./docker-compose.yml"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ docker.group }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
     mode: "0755"
 
 - name: Run WordPress
