@@ -5,6 +5,8 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0755"
+  register: put_result
 
 - name: Run WordPress
   shell: "docker-compose up -d"
+  when: (put_result is changed)

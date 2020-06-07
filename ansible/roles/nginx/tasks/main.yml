@@ -10,6 +10,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0755"
+  register: result_put_nginx_conf
 
 - name: Put logrotate conf
   template:
@@ -18,8 +19,9 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: "0644"
+  register: result_put_logrotate_conf
 
-- name: set chmod
+- name: make directory
   file:
     path: "{{ item }}"
     state: "directory"
@@ -35,3 +37,6 @@
     name: nginx.service
     state: restarted
     enabled: True
+  when: >
+    (result_put_nginx_conf is changed ) or
+    (result_put_logrotate_conf is changed )
