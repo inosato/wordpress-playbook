@@ -4,20 +4,12 @@
   register: docker_version
   changed_when: False
 
-# - name: debug docker_version
-#   debug:
-#     msg: "{{ docker_version }}"
-
 - name: Get Docker start shell file
   get_url:
     url: "https://get.docker.com/"
     dest: /tmp/start.sh
   register: start_shell
   when: docker_version.rc != 0
-
-# - name: debug start_shell
-#  debug:
-#    msg: "{{ start_shell }}"
 
 - name: Add Execution authority
   file:
