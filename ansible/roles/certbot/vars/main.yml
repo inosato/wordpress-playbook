@@ -1,0 +1,2 @@
+standalone_command: "certbot certonly --standalone -d {{ domain }} -m {{ email }} --agree-tos -n"
+force_update: true

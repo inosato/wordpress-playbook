@@ -5,6 +5,10 @@
       vars: [{ ansible_become_user: root }]
       tags: Initial
 
+    - role: yum/cerbot
+      vars: [{ ansible_become_user: root }]
+      tags: Basic
+
     - role: user
       vars: [{ ansible_become_user: root }]
       tags: Basic
@@ -20,3 +24,7 @@
     - role: nginx
       vars: [{ ansible_become_user: root }]
       tags: Basic
+
+    - role: certbot
+      vars: [{ ansible_become_user: root }]
+      tags: CreateSSL

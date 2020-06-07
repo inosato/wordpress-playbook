@@ -1,3 +1,7 @@
 user: admin
 group: admin
 docker_group: docker
+
+domain: "example.com"
+doc_root: "/usr/share/nginx/html"
+email: "test@gmail.com"

@@ -1,0 +1,16 @@
+- name: stop nginx
+  systemd:
+    name: nginx
+    state: stopped
+
+- name: create SSL certificate test
+  shell: "{{ standalone_command }}  --test-cert"
+
+- name: create SSL certificate
+  shell: "{{ standalone_command }} --force-renewal"
+  when: force_update
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: restarted
