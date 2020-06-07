@@ -1,0 +1,11 @@
+{{ nginx.logdir }}/*log {
+    daily
+    missingok
+    rotate 35
+    compress
+    delaycompress
+    sharedscripts
+    postrotate
+        [ ! -f {{ nginx.pidfile }} || kill -USR1 `cat {{ nginx.pidfile }}`
+    endscript
+}

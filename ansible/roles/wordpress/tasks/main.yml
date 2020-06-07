@@ -1,20 +1,15 @@
-- name: debug name
-  debug:
-    msg: "{{ ansible_env.USER }}"
-
 - name: user mod
   user:
     name: "{{ ansible_env.USER }}"
-    group: docker
+    group: "{{ docker.group }}"
 
 - name: Put docker-compose.yml
   template:
     src: docker-compose.yml.j2
-    dest: "~/docker-compose.yml"
+    dest: "./docker-compose.yml"
     owner: "{{ ansible_env.USER }}"
-    group: docker
+    group: "{{ docker.group }}"
     mode: "0755"
-  register: compose_info
 
 - name: Run WordPress
-  shell: "docker-compose up -d -f ~/docker-compose.yml"
+  shell: "docker-compose up -d"

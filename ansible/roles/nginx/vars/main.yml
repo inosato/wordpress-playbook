@@ -1,0 +1,7 @@
+nginx:
+    user: "admin"
+    group: "wheel"
+    root: "/etc/nginx"
+    logdir: "/var/log/nginx"
+    pidfile: "/var/run/nginx.pid"
+    server_name: '""'

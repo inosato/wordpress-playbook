@@ -1,0 +1,5 @@
+[nginx] # リポジトリID（なんのリポジトリなのかを表す、ユニークで任意な名前）
+name=nginx repo # リポジトリ名(yum repolistで表示される)
+baseurl=http://nginx.org/packages/centos/7/$basearch/ # リポジトリの場所(このurlの先のリモートにリポジトリがある)
+gpgcheck=0 # GPG署名確認を有効にするか否か（0 = しない, 1 = する）
+enabled=1 # yum コマンド利用時にこのリポジトリを使用するかどうか（0 = しない, 1 = する）
