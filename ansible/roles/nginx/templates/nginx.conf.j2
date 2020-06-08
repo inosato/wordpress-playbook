@@ -56,8 +56,11 @@ http {
         #     root         {{ doc_root }};
         # }
 
+        # location / {
+        #     return 301 https://$host$request_uri;
+        # }
         location / {
-            return 301 https://$host$request_uri;
+            proxy_pass http://wordpress;
         }
     }
 
