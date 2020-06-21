@@ -1,4 +1,4 @@
-.PHONY: run run-first dry-run create-ssl
+.PHONY: run run-first dry-run
 
 HOSTS=./ansible/inventory/hosts
 PLAYBOOK=./ansible/playbook.yml
@@ -12,6 +12,3 @@ run:
 
 dry-run:
 	ansible-playbook -i $(HOSTS) $(PLAYBOOK) --syntax-check
-
-create-ssl:
-	ansible-playbook -i $(HOSTS) $(PLAYBOOK) -t CreateSSL
