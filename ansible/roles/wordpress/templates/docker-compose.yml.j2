@@ -15,7 +15,7 @@ services:
   wordpress:
     depends_on:
       - "db"
-    image: "wordpress:latest"
+    image: "wordpress:5.4.2-php7.4-apache"
     ports:
       - "8000:80"
     volumes:
@@ -26,5 +26,38 @@ services:
       WORDPRESS_DB_USER: "wordpress"
       WORDPRESS_DB_PASSWORD: "wordpress"
       WORDPRESS_DB_NAME: "wordpress"
+      VIRTUAL_HOST: {{ domain }}
+      LETSENCRYPT_HOST: {{ domain }}
+      LETSENCRYPT_EMAIL: {{ email }}
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - mginxhtml:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - vhost:/etc/nginx/vhost.d
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+
+  letsencrypt-nginx:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: lets
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhost:/etc/nginx/vhost.d
+      - mginxhtml:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - nginx-proxy
+
 volumes:
-  db_data: {}
+  certs:
+  html:
+  mginxhtml:
+  vhost:
+  dhparam:
